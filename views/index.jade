@@ -1,5 +1,16 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  div.top
+
+  div.container
+    div.content
+      div.text-center
+        form.form-horizontal(method="post", id="loginForm", action='/start')
+          label Signum
+          input.span3(id="signum", type="text", name="signum", placeholder="Enter your signum")
+          input.btn(type="submit", value="Start")
+     
+ 
+  div.footer
+

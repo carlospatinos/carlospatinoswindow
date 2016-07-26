@@ -6,6 +6,24 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+
+
+router.post('/start', function(req, res, next) {
+
+    // Set our internal DB variable
+    var db = req.db;
+
+    // Get our form values. These rely on the "name" attributes
+    var signum = req.body.signum;
+
+    // Set our collection
+    res.render('choosewords', {
+            "signum" : signum
+        });
+});
+
+
+
 router.get('/userlist', function(req, res, next) {
     var db = req.db;
     var collection = db.get('usersdata');
