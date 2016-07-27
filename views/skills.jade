@@ -1,0 +1,16 @@
+extends layout
+
+block content
+    h1.
+        Skill List
+    div.list-group
+        each skill, i in skillsList
+                  button.list-group-item(type="button") #{skill.skillTitle}
+
+    ol.breadcrumb
+      li 
+        a(href='/') home
+      li 
+        a(href='/newskill') Add more skills
+      li 
+        a(href='/skills') List skills

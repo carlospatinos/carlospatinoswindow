@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 
 
 
-router.post('/start', function(req, res, next) {
+router.post('/choosewords', function(req, res, next) {
 
     // Set our internal DB variable
     var db = req.db;
@@ -16,46 +16,52 @@ router.post('/start', function(req, res, next) {
     // Get our form values. These rely on the "name" attributes
     var signum = req.body.signum;
 
+    console.log('holaaaaa');
     // Set our collection
-    res.render('choosewords', {
+    var collection = db.get('skills');
+    collection.find({},{},function(e,docs){
+        res.render('choosewords', {
+            "skillsList" : docs,
             "signum" : signum
         });
+    });
 });
 
 
 
-router.get('/userlist', function(req, res, next) {
+router.get('/skills', function(req, res, next) {
     var db = req.db;
-    var collection = db.get('usersdata');
+    var collection = db.get('skills');
     collection.find({},{},function(e,docs){
-        res.render('userlist', {
-            "userlist" : docs
+        res.render('skills', {
+            "skillsList" : docs
         });
     });
 });
 
 /* GET New User page. */
-router.get('/newuser', function(req, res, next) {
-    res.render('newuser', { title: 'Add New User' });
+router.get('/newskill', function(req, res, next) {
+    res.render('newskill', { title: 'Add New Skill' });
 });
 
 /* POST to Add User Service */
-router.post('/adduser', function(req, res, next) {
+router.post('/skills', function(req, res, next) {
 
     // Set our internal DB variable
     var db = req.db;
 
     // Get our form values. These rely on the "name" attributes
-    var userName = req.body.username;
-    var userEmail = req.body.useremail;
+    var skillTitle = req.body.skillTitle;
+    var skillType = req.body.skillType;
 
     // Set our collection
-    var collection = db.get('usersdata');
+    var collection = db.get('skills');
 
     // Submit to the DB
+    /*
     collection.insert({
-        "username" : userName,
-        "email" : userEmail
+        "skillTitle" : skillTitle,
+        "skillType" : skillType
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
@@ -63,9 +69,21 @@ router.post('/adduser', function(req, res, next) {
         }
         else {
             // And forward to success page
-            res.redirect("userlist");
+            res.redirect("skills");
         }
     });
+*/
+
+var conf = [ 'a', 'b', 'c'];
+
+for (var i in conf) {
+  val = conf[i];
+  console.log(val.path);
+}
+
+
+
+
 });
 
 module.exports = router;

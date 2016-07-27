@@ -11,12 +11,19 @@ block content
       div.text-center
         form.form-horizontal(method="post", id="selectedWords", action='/profileReady')
           div.btn-group(data-toggle="buttons")
-            label.btn.btn-primary
-              input(type="checkbox", name="username" autocomplete="off")
-              | hola
-            label.btn.btn-primary
-              input(type="checkbox", name="username" autocomplete="off")
-              | hola
-     
- 
+            each skill, i in skillsList
+              label.btn.btn-primary
+                input(type="checkbox", name="#{skill.skillTitle}" autocomplete="off")
+                | #{skill.skillTitle}
+
+  br
+  br
   div.footer
+    ol.breadcrumb
+      li 
+        a(href='/') home
+      li 
+        a(href='/newskill') Add more skills
+      li 
+        a(href='/skills') List skills
+  
