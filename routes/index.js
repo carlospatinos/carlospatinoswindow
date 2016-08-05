@@ -16,7 +16,6 @@ router.post('/choosewords', function(req, res, next) {
     // Get our form values. These rely on the "name" attributes
     var signum = req.body.signum;
 
-    console.log('holaaaaa');
     // Set our collection
     var collection = db.get('skills');
     collection.find({},{},function(e,docs){
@@ -52,16 +51,14 @@ router.post('/skills', function(req, res, next) {
 
     // Get our form values. These rely on the "name" attributes
     var skillTitle = req.body.skillTitle;
-    var skillType = req.body.skillType;
 
     // Set our collection
     var collection = db.get('skills');
 
     // Submit to the DB
-    /*
+    
     collection.insert({
-        "skillTitle" : skillTitle,
-        "skillType" : skillType
+        "skillTitle" : skillTitle
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
@@ -72,16 +69,26 @@ router.post('/skills', function(req, res, next) {
             res.redirect("skills");
         }
     });
-*/
 
-var conf = [ 'a', 'b', 'c'];
+
+/*var conf = ['able', 'accepting', 'adaptable', 'bold', 'brave', 'calm', 'caring', 'cheerful', 'clever', 'complex', 'bad', 'confident', 'dependable', 'dignified', 'energetic', 'extroverted', 'friendly', 'giving', 'happy', 'helpful', 'idealistic', 'independent', 'ingenious', 'intelligent', 'introverted', 'kind', 'knowledgeable', 'logical', 'loving', 'mature', 'modest', 'nervous', 'observant', 'organised', 'patient', 'powerful', 'proud', 'quiet', 'reflective', 'relaxed', 'religious', 'responsive', 'searching', 'self-assertive', 'self-conscious', 'sensible', 'sentimental', 'shy', 'silly', 'spontaneous', 'sympathetic', 'tense', 'trustworthy', 'warm', 'wise', 'witt'];
 
 for (var i in conf) {
   val = conf[i];
-  console.log(val.path);
+  console.log("inserting: " + val);
+  collection.insert({
+        "skillTitle" : val
+    }, function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            console.log("There was a problem adding the information to the database.");
+        }
+    });
+
 }
 
-
+res.redirect("skills");
+*/
 
 
 });

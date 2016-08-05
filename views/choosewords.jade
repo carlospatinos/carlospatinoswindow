@@ -1,7 +1,43 @@
 extends layout
 
 block content
-    
+  script.
+    $(document).ready(function(){
+      var maxNumberOfChoses = 5;
+      var minNumberOfChoses = 3;
+
+      $('#checkOptions').on('click', function () {
+        var checkedBoxes = $('input:checked').length;
+        console.log('checkedBoxes: ' + checkedBoxes);
+        if(checkedBoxes > maxNumberOfChoses) {
+          alert('You\'re not allowed to choose more than ' + maxNumberOfChoses + ' boxes');
+        }
+      });
+
+      $('#deselect').on('click', function () {
+        var checkedBoxes = $('input:checked').length;
+        console.log('checkedBoxes: ' + checkedBoxes);
+        $("input:checkbox").prop("checked", false);
+        $("input:checkbox").attr("checked", false);
+
+      });
+      /*
+      $('#deselect').toggle(function(){
+          $('input:checkbox').attr('checked','checked');
+          $(this).val('uncheck all');
+      },function(){
+          $('input:checkbox').removeAttr('checked');
+          $(this).val('check all');        
+      });*/
+
+      $('input[type="checkbox"]').click(function(event) {
+        if (this.checked && $('input:checked').length > maxNumberOfChoses) {
+          event.preventDefault();
+          console.log("Maximum number of selected boxes allowed is " + maxNumberOfChoses);
+        }
+      });
+    });
+
 
   div.top
     h1= signum 
@@ -10,14 +46,19 @@ block content
     div.content
       div.text-center
         form.form-horizontal(method="post", id="selectedWords", action='/profileReady')
-          div.btn-group(data-toggle="buttons")
+          div#holder
             each skill, i in skillsList
-              label.btn.btn-primary
-                input(type="checkbox", name="#{skill.skillTitle}" autocomplete="off")
-                | #{skill.skillTitle}
+                input(type="checkbox", name="hola" autocomplete="off" id="#{skill.skillTitle}" class="regular-checkbox big-checkbox")
+                label(for="#{skill.skillTitle}") #{skill.skillTitle}
+  
 
+  button(class="btn btn-default" type="submit" id="checkOptions") Send options
   br
   br
+  button(class="btn btn-default" type="submit" id="deselect") Deselect options
+  br
+  br
+
   div.footer
     ol.breadcrumb
       li 
