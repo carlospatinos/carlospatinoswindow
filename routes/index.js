@@ -8,24 +8,53 @@ router.get('/', function(req, res, next) {
 
 
 
-router.post('/choosewords', function(req, res, next) {
+router.post('/myview', function(req, res, next) {
 
     // Set our internal DB variable
     var db = req.db;
 
     // Get our form values. These rely on the "name" attributes
     var signum = req.body.signum;
+    req.session.signum = signum;
 
     // Set our collection
     var collection = db.get('skills');
     collection.find({},{},function(e,docs){
-        res.render('choosewords', {
-            "skillsList" : docs,
-            "signum" : signum
+        res.render('myview', {
+            "skillsList" : docs
         });
     });
 });
 
+
+router.post('/storePersonalAttributes', function(req, res, next) {
+
+    // Set our internal DB variable
+    var db = req.db;
+
+    // Set our collection
+    var collection = db.get('attributesPerPersonByDate');
+
+    // Submit to the DB
+    
+    collection.insert({
+        "person" : req.session.signum,
+        "attributes" : req.body
+    }, function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.send("There was a problem adding the information to the database.");
+        }
+        else {
+            // And forward to success page
+            //res.redirect("linkWithPersonalView");
+            res.render('linkWithPersonalView', {
+                "attributes" : req.body
+            });
+        }
+    });
+
+});
 
 
 router.get('/skills', function(req, res, next) {
@@ -37,6 +66,15 @@ router.get('/skills', function(req, res, next) {
         });
     });
 });
+
+/*
+router.get('/linkWithPersonalView', function(req, res, next) {
+    res.render('linkWithPersonalView', { title: 'Summary' });
+});*/
+
+
+
+
 
 /* GET New User page. */
 router.get('/newskill', function(req, res, next) {

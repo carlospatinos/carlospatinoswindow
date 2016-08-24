@@ -38,33 +38,32 @@ block content
       });
     });
 
-
   div.top
-    h1= signum 
-
-  div.container
-    div.content
-      div.text-center
-        form.form-horizontal(method="post", id="selectedWords", action='/profileReady')
-          div#holder
-            each skill, i in skillsList
-                input(type="checkbox", name="hola" autocomplete="off" id="#{skill.skillTitle}" class="regular-checkbox big-checkbox")
-                label(for="#{skill.skillTitle}") #{skill.skillTitle}
-  
-
-  button(class="btn btn-default" type="submit" id="checkOptions") Send options
-  br
-  br
-  button(class="btn btn-default" type="submit" id="deselect") Deselect options
-  br
-  br
-
-  div.footer
     ol.breadcrumb
       li 
         a(href='/') home
-      li 
-        a(href='/newskill') Add more skills
-      li 
-        a(href='/skills') List skills
+      li.active  description
+
+  br
+  br
+  div.container
+    div.content
+      div.text-center
+        label Please select between 3 and 5 values that describe yourself. 
+        br
+        br
+        button(class="btn btn-default" type="submit" id="deselect") Deselect options
+        br
+        br
+        form.form-horizontal(method="post", id="selectedWords", action='/storePersonalAttributes')
+          div#holder
+            each skill, i in skillsList
+                input(type="checkbox", name="#{skill.skillTitle}" autocomplete="off" id="#{skill.skillTitle}" class="regular-checkbox big-checkbox")
+                label(for="#{skill.skillTitle}") #{skill.skillTitle}
+          button(class="btn btn-default" type="submit" id="checkOptions") Send options
+        br
+        br
+
+  div.footer
+    label User: #{session.signum}
   

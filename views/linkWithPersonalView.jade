@@ -1,0 +1,25 @@
+extends layout
+
+block content
+
+  div.top
+    ol.breadcrumb
+      li 
+        a(href='/') home
+      li.active  description
+
+  br
+  br
+  div.container
+    div.content
+      div.text-center
+        each attr, i in attributes
+          label(for="#{attr}" ) #{attr} -
+        label Done 
+        br
+        br
+       
+
+  div.footer
+    label User: #{session.signum}
+  
