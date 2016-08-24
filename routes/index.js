@@ -3,12 +3,12 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Welcome' });
 });
 
 
 
-router.post('/myview', function(req, res, next) {
+router.post('/personalAwarness', function(req, res, next) {
 
     // Set our internal DB variable
     var db = req.db;
@@ -20,7 +20,7 @@ router.post('/myview', function(req, res, next) {
     // Set our collection
     var collection = db.get('skills');
     collection.find({},{},function(e,docs){
-        res.render('myview', {
+        res.render('personalAwarness', {
             "skillsList" : docs
         });
     });
@@ -36,7 +36,6 @@ router.post('/storePersonalAttributes', function(req, res, next) {
     var collection = db.get('attributesPerPersonByDate');
 
     // Submit to the DB
-    
     collection.insert({
         "person" : req.session.signum,
         "attributes" : req.body

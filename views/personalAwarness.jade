@@ -52,15 +52,17 @@ block content
         label Please select between 3 and 5 values that describe yourself. 
         br
         br
-        button(class="btn btn-default" type="submit" id="deselect") Deselect options
-        br
         br
         form.form-horizontal(method="post", id="selectedWords", action='/storePersonalAttributes')
           div#holder
             each skill, i in skillsList
                 input(type="checkbox", name="#{skill.skillTitle}" autocomplete="off" id="#{skill.skillTitle}" class="regular-checkbox big-checkbox")
                 label(for="#{skill.skillTitle}") #{skill.skillTitle}
-          button(class="btn btn-default" type="submit" id="checkOptions") Send options
+          br
+          br
+          div(class="btn-group" role="group")
+            button(class="btn btn-default" type="submit" id="checkOptions") Send options
+            button(class="btn btn-default" type="button" id="deselect") Deselect options
         br
         br
 
