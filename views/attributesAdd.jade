@@ -1,11 +1,11 @@
-extends layout
+extends layoutAttributes
 
 block content
     h1= title
     div.container
     div.content
       div.text-center
-        form.form-horizontal(method="post", action='/skills')
+        form.form-horizontal(method="post", action='/skills/add')
           div.input-group
             span.input-group-addon.glyphicon.glyphicon-tags
             input#inputSkillTitle(type="text" class="form-control" placeholder="Skill name" name="skillTitle")

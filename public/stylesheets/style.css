@@ -1,12 +1,10 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
 }
-
 
 
 #holder {
@@ -156,8 +154,10 @@ g.item circle {
   stroke: none;
 }
 
-
-
 text {
   font: 12px sans-serif;
+}
+
+.etop{
+  margin: 20px;
 }

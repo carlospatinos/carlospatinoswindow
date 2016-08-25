@@ -11,9 +11,9 @@ var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('mongodb://ecapati:ecapati@ds021895.mlab.com:21895/carloswindow');
 
-
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var attributes = require('./routes/attributes');
+var profiles = require('./routes/profiles');
 
 var app = express();
 
@@ -56,7 +56,8 @@ app.use(function(req,res,next){
 });
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/attributes', attributes);
+app.use('/profiles', profiles);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -99,8 +100,12 @@ app.use(function(err, req, res, next) {
     //console.log("Express server listening on port " + app.get('port'));
 //});
 
-var listener = app.listen(app.get('port'), function(){
-    console.log('Listening on port ' + listener.address().port); //Listening on port 8888
+var server  = app.listen(app.get('port'), 'localhost', function(){
+    //console.log('Listening on port ' + server .address().port); //Listening on port 8888
+    var host = server.address().address
+    var port = server.address().port
+
+    console.log("App listening at http://%s:%s", host, port)
 });
 
 module.exports = app;

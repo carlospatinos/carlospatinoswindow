@@ -1,4 +1,4 @@
-extends layout
+extends layoutProfiles
 
 block content
   script.
@@ -53,7 +53,7 @@ block content
         br
         br
         br
-        form.form-horizontal(method="post", id="selectedWords", action='/storePersonalAttributes')
+        form.form-horizontal(method="post", id="selectedWords", action='/profiles/show')
           div#holder
             each skill, i in skillsList
                 input(type="checkbox", name="#{skill.skillTitle}" autocomplete="off" id="#{skill.skillTitle}" class="regular-checkbox big-checkbox")

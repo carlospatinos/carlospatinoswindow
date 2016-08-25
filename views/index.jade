@@ -1,16 +1,27 @@
 extends layout
 
 block content
-  div.top
+  div.etop
+    ul.nav.nav-tabs
+      li.active
+        a(href='#') Home
+      li
+        a(href='/attributes/list') Attributes
+      li
+        a(href='/profiles/show') Profiles
+      li.dropdown.pull-right
+        a.dropdown-toggle(href='#' data-toggle="dropdown") #{session.signum}
+          b.caret
+        ul.dropdown-menu
+          li 
+            a(href='/logout') Logout
+
+
 
   div.container
     div.content
       div.text-center
-        form.form-horizontal(method="post", id="loginForm", action='/personalAwarness')
-          div.input-group
-            input.span3(type="text" class="form-control" placeholder="Enter your signum" name="signum")
-            span.input-group-btn
-              button(class="btn btn-default" type="submit") Go
+        p welcome
 
      
  
