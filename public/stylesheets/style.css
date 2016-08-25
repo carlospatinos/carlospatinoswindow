@@ -129,10 +129,35 @@ text {
   font: 18px 'Open Sans', sans-serif;;
   text-anchor: middle;
   pointer-events: none;
-  fill: white;
+  fill: black;
 }
+
 circle {
   fill: #ccc;
   stroke: white ;
   stroke-width: 2px;
+}
+
+.grid {
+  stroke-width: 0.5px;
+  stroke: steelblue;
+  fill: none;
+  opacity: 0.5;
+}
+
+.axis {
+  stroke-width: 3px;
+  stroke: black;
+  fill: none;
+}
+
+g.item circle {
+  fill: black;
+  stroke: none;
+}
+
+
+
+text {
+  font: 12px sans-serif;
 }
