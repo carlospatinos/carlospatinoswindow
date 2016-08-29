@@ -12,7 +12,8 @@ router.get('/list', function(req, res, next) {
     var collection = db.get('skills');
     collection.find({},{},function(e,docs){
         res.render('attributesList', {
-            "skillsList" : docs
+            "skillsList" : docs,
+            title: "Skill List" 
         });
     });
 });

@@ -6,27 +6,24 @@ block content
     attributesDefined = !{JSON.stringify(attributes)}
     console.log(attributesDefined)
 
-    
-
   div.top
-    ol.breadcrumb
-      li 
-        a(href='/') home
-      li.active  description
+
 
   div.container
     div.content
-      h1 Summary for: #{session.signum}
+      h3= stepDetails
       p Here you will find the summary of the attributes highlighted by you and others.
       div.text-center
-        //each attrValue, attrName in attributes
+        each attrValue, attrName in attributes
+          label= attrValue
         div#viz
         br
+        
         br
       p The next step is to invite your colleagues to say which words they associate with you. You can do this by sharing the following URL: 
-        a(href='http://kevan.org/jh/adsasdadasdasdas') http://kevan.org/jh/adsasdadasdasdas
+        a(href='http://tool.org/adsasdadasdasdas') http://tool.org/jh/adsasdadasdasdas
       p To watch how your Johari Window changes, uplease se this URL:
-        a(href='http://kevan.org/johari?view=adsasdadasdasdas') http://kevan.org/johari?view=adsasdadasdasdas
+        a(href='http://tool.org/johari?view=adsasdadasdasdas') http://tool.org/johari?view=adsasdadasdasdas
       
 
 

@@ -2,18 +2,17 @@ extends layoutAttributes
 
 block content
 
+  div.container
+    div.content
+      h3= title
 
-  h1.
-    Skill List
-  div.list-group
-    each skill, i in skillsList
-      button.list-group-item(type="button") #{skill.skillTitle}
+      div.list-group
+        table
+          tbody
+            each skill, i in skillsList
+              if (i == 0 || i%8==0) 
+                tr
+              else 
+                td 
+                  button.list-group-item(type="button") #{skill.skillTitle}
 div.foot
-    ol.breadcrumb
-      li 
-        a(href='/') home
-      li.active  new
-      li 
-        a(href='/newskill') Add more skills
-      li 
-        a(href='/skills') List skills

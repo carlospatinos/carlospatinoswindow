@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    title= "Johari Window"
+    title= title
     link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
@@ -14,10 +14,26 @@ html
       ul.nav.nav-tabs
         li
           a(href='/') Home
-        li.active
-          a(href='#') Attributes
-        li
-          a(href='/profiles/show') Profiles
+        li.dropdown.active
+          a.dropdown-toggle(href='#' data-toggle="dropdown") Attributes
+            b.caret
+          ul.dropdown-menu
+            li 
+              a(href='/attributes/add') Add
+            li.divider(role="separator")
+            li 
+              a(href='/attributes/list') Show
+
+        li.dropdown
+          a.dropdown-toggle(href='#' data-toggle="dropdown") Profiles
+            b.caret
+          ul.dropdown-menu
+            li 
+              a(href='/profiles/add') Add
+            li.divider(role="separator")
+            li 
+              a(href='/profiles/show') Show
+
         li.dropdown.pull-right
           a.dropdown-toggle(href='#' data-toggle="dropdown") #{session.signum}
             b.caret
@@ -25,4 +41,4 @@ html
             li 
               a(href='/logout') Logout
 
-block content
+      block content

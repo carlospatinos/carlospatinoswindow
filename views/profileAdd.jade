@@ -9,7 +9,7 @@ block content
       $('#checkOptions').on('click', function () {
         var checkedBoxes = $('input:checked').length;
         console.log('checkedBoxes: ' + checkedBoxes);
-        if(checkedBoxes > maxNumberOfChoses) {
+        if(checkedBoxes > maxNumberOfChoses || checkedBoxes < minNumberOfChoses) {
           alert('You\'re not allowed to choose more than ' + maxNumberOfChoses + ' boxes');
         }
       });
@@ -21,14 +21,7 @@ block content
         $("input:checkbox").attr("checked", false);
 
       });
-      /*
-      $('#deselect').toggle(function(){
-          $('input:checkbox').attr('checked','checked');
-          $(this).val('uncheck all');
-      },function(){
-          $('input:checkbox').removeAttr('checked');
-          $(this).val('check all');        
-      });*/
+
 
       $('input[type="checkbox"]').click(function(event) {
         if (this.checked && $('input:checked').length > maxNumberOfChoses) {
@@ -38,22 +31,23 @@ block content
       });
     });
 
-  div.top
-    ol.breadcrumb
-      li 
-        a(href='/') home
-      li.active  description
+    verifyMinimumBoxes() {
+      alert($('input:checked').length);
+      if ($('input:checked').length < minNumberOfChoses) {
+        event.preventDefault();
+        console.log("Minumum number of selected boxes allowed is " + minNumberOfChoses);
+        alert("Error");
+        return false
+      }
+    }
 
-  br
-  br
   div.container
     div.content
+      h3= stepDetails 
+        b= target
       div.text-center
-        label Please select between 3 and 5 values that describe yourself. 
         br
-        br
-        br
-        form.form-horizontal(method="post", id="selectedWords", action='/profiles/show')
+        form.form-horizontal(method="post", id="selectedWords", action='/profiles/save?target=#{target}')
           div#holder
             each skill, i in skillsList
                 input(type="checkbox", name="#{skill.skillTitle}" autocomplete="off" id="#{skill.skillTitle}" class="regular-checkbox big-checkbox")
@@ -67,5 +61,4 @@ block content
         br
 
   div.footer
-    label User: #{session.signum}
   
