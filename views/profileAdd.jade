@@ -2,10 +2,11 @@ extends layoutProfiles
 
 block content
   script.
-    $(document).ready(function(){
-      var maxNumberOfChoses = 5;
-      var minNumberOfChoses = 3;
+    var maxNumberOfChoses = 5;
+    var minNumberOfChoses = 3;
 
+    $(document).ready(function(){
+      /*
       $('#checkOptions').on('click', function () {
         var checkedBoxes = $('input:checked').length;
         console.log('checkedBoxes: ' + checkedBoxes);
@@ -13,7 +14,7 @@ block content
           alert('You\'re not allowed to choose more than ' + maxNumberOfChoses + ' boxes');
         }
       });
-
+      */
       $('#deselect').on('click', function () {
         var checkedBoxes = $('input:checked').length;
         console.log('checkedBoxes: ' + checkedBoxes);
@@ -31,14 +32,20 @@ block content
       });
     });
 
-    verifyMinimumBoxes() {
-      alert($('input:checked').length);
+    function verifyMinimumBoxes() {
       if ($('input:checked').length < minNumberOfChoses) {
-        event.preventDefault();
+        //event.preventDefault();
         console.log("Minumum number of selected boxes allowed is " + minNumberOfChoses);
-        alert("Error");
+        alert("Minumum number of selected boxes allowed is " + minNumberOfChoses);
         return false
       }
+      if ($('input:checked').length > maxNumberOfChoses) {
+        //event.preventDefault();
+        console.log("Maximum number of selected boxes allowed is " + maxNumberOfChoses);
+        alert("Maximum number of selected boxes allowed is " + maxNumberOfChoses);
+        return false
+      }
+      return true;
     }
 
   div.container
@@ -47,7 +54,7 @@ block content
         b= target
       div.text-center
         br
-        form.form-horizontal(method="post", id="selectedWords", action='/profiles/save?target=#{target}')
+        form.form-horizontal(method="post", id="selectedWords", action='/profiles/save?target=#{target}' onsubmit="return verifyMinimumBoxes();")
           div#holder
             each skill, i in skillsList
                 input(type="checkbox", name="#{skill.skillTitle}" autocomplete="off" id="#{skill.skillTitle}" class="regular-checkbox big-checkbox")

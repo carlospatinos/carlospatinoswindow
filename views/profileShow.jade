@@ -8,56 +8,33 @@ block content
 
   div.top
 
-
   div.container
+
     div.content
       h3= stepDetails
       p Here you will find the summary of the attributes highlighted by you and others.
       div.text-center
-        each attrValue, attrName in attributes
-          label= attrValue
+        //        each obj, i in attributes
+        //          label #{obj.name}
         div#viz
         br
         
-        br
       p The next step is to invite your colleagues to say which words they associate with you. You can do this by sharing the following URL: 
-        a(href='http://tool.org/adsasdadasdasdas') http://tool.org/jh/adsasdadasdasdas
-      p To watch how your Johari Window changes, uplease se this URL:
-        a(href='http://tool.org/johari?view=adsasdadasdasdas') http://tool.org/johari?view=adsasdadasdasdas
+        a(href='http://#{appIp}/profiles/add?target=#{session.signum}') http://#{appIp}/profiles/add?target=#{session.signum}
+      p To watch how your Carlos Window changes, please se this URL:
+        a(href='http://#{appIp}/profiles/show') http://#{appIp}/profiles/show
       
 
 
   script.
     // GROUPS:  0 Web | 1: Adobe | 2: hybrid
-    var data = [
-      {"id": 0, "name": "able", "r": 50 },
-      {"id": 0, "name": "accepting", "r": 40 },
-      {"id": 0, "name": "dignified", "r": 30 },
-      {"id": 0, "name": "energetic", "r": 40 },
-      {"id": 0, "name": "knowledgeable", "r": 45 },
+    attributesDefined = !{JSON.stringify(attributes)}
+    console.log(attributesDefined)
 
-
-      {"id": 1, "name": "able", "r": 50 },
-      {"id": 1, "name": "accepting", "r": 40 },
-      {"id": 1, "name": "dignified", "r": 30 },
-      {"id": 1, "name": "energetic", "r": 40 },
-      {"id": 1, "name": "knowledgeable", "r": 45 },
-
-      {"id": 2, "name": "able", "r": 50 },
-      {"id": 2, "name": "accepting", "r": 40 },
-      {"id": 2, "name": "dignified", "r": 30 },
-      {"id": 2, "name": "energetic", "r": 40 },
-      {"id": 2, "name": "knowledgeable", "r": 45 },
-
-      {"id": 3, "name": "able", "r": 50 },
-      {"id": 3, "name": "accepting", "r": 40 },
-      {"id": 3, "name": "dignified", "r": 30 },
-      {"id": 3, "name": "energetic", "r": 40 },
-      {"id": 3, "name": "knowledgeable", "r": 45 },
-    ];
+    var data = attributesDefined;
 
     var width = document.getElementById("viz").offsetWidth; //window.innerWidth,
-        height = 600, dotRadius = 4,
+        height = 700, dotRadius = 4,
         gridSpacing = 10;
 
     var widthPos1 = width/4;

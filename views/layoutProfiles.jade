@@ -15,6 +15,7 @@ html
       ul.nav.nav-tabs
         li
           a(href='/') Home
+        -if(session.signum=="ecapati"){
         li.dropdown
           a.dropdown-toggle(href='#' data-toggle="dropdown") Attributes
             b.caret
@@ -24,7 +25,7 @@ html
             li.divider(role="separator")
             li 
               a(href='/attributes/list') Show
-
+        -}
         li.dropdown.active
           a.dropdown-toggle(href='#' data-toggle="dropdown") Profiles
             b.caret
@@ -34,6 +35,9 @@ html
             li.divider(role="separator")
             li 
               a(href='/profiles/show') Show
+            li.divider(role="separator")
+            li 
+              a(href='/profiles/share') Share
 
         li.dropdown.pull-right
           a.dropdown-toggle(href='#' data-toggle="dropdown") #{session.signum}

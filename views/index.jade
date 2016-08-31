@@ -6,6 +6,7 @@ block content
       ul.nav.nav-tabs
         li.active
           a(href='/') Home
+        -if(session.signum=="ecapati"){
         li.dropdown
           a.dropdown-toggle(href='#' data-toggle="dropdown") Attributes
             b.caret
@@ -15,7 +16,7 @@ block content
             li.divider(role="separator")
             li 
               a(href='/attributes/list') Show
-
+        -}
         li.dropdown
           a.dropdown-toggle(href='#' data-toggle="dropdown") Profiles
             b.caret
@@ -25,6 +26,9 @@ block content
             li.divider(role="separator")
             li 
               a(href='/profiles/show') Show
+            li.divider(role="separator")
+            li 
+              a(href='/profiles/share') Share
 
         li.dropdown.pull-right
           a.dropdown-toggle(href='#' data-toggle="dropdown") #{session.signum}
@@ -39,13 +43,13 @@ block content
             h3 Welcome, 
             h4 The purpose of this tool is to provide self awarness to all of us. The way to use it is as follows:
             div.list-group
-              a.list-group-item.list-group-item-action
+              a.list-group-item.list-group-item-action(href="/profiles/add")
                 h5.list-group-item-heading Create a profile
                 p.list-group-item-text You will select couple of words that you think describe yourself.
-              a.list-group-item.list-group-item-action
-                h5.list-group-item-heading Share your view
+              a.list-group-item.list-group-item-action(href="/profiles/share")
+                h5.list-group-item-heading Share your profile
                 p.list-group-item-text Share your profile link to others and ask them to describe you as they see you.
-              a.list-group-item.list-group-item-action
+              a.list-group-item.list-group-item-action(href="/profiles/show")
                 h5.list-group-item-heading Understand the results
                 p.list-group-item-text Data is split in 4 groups. Wellknoen, Known to others, Known to you, Uknown. Size of the bubbles is based on the number of people agreen on that.
 

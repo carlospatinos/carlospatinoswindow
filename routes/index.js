@@ -25,7 +25,8 @@ router.get('/logout', function(req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
-    res.render('login', { title: cTitle });
+    console.log("login ===>" + req.query.urlToGo);
+    res.render('login', { title: cTitle, urlToGo: req.query.urlToGo });
 });
 
 router.post('/login', function(req, res, next) {
@@ -33,7 +34,14 @@ router.post('/login', function(req, res, next) {
     var signum = req.body.signum;
     sess.signum = signum;
     //Session set when user Request our app via URL
-    res.redirect('/');
+    var urlToGo = req.query.urlToGo;
+    if(urlToGo != undefined && urlToGo != "undefined") {
+      console.log("Going to " + urlToGo);
+      res.redirect(urlToGo);
+    } else {
+      res.redirect('/');
+    }
+    
   
 });
 

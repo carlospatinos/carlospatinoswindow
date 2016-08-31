@@ -1,0 +1,25 @@
+extends layoutProfiles
+
+block content
+
+  script.
+    attributesDefined = !{JSON.stringify(attributes)}
+    console.log(attributesDefined)
+
+  div.top
+
+  div.container
+
+    div.content
+      h3= stepDetails
+      p Here you have the links to your profile.
+      div
+        p Please invite people to contribute to your picture. You can do this by sharing the following URL: 
+          a(href='http://#{appIp}/profiles/add?target=#{session.signum}') http://#{appIp}/profiles/add?target=#{session.signum}
+        p To watch how your Carlos Window changes, please se this URL:
+          a(href='http://#{appIp}/profiles/show') http://#{appIp}/profiles/show
+        br
+        
+
+      
+

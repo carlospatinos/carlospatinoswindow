@@ -18,9 +18,11 @@ var profiles = require('./routes/profiles');
 
 var app = express();
 
+var appIp = "159.107.166.32";
+
 //var http = require('http');
 
-app.set('port', process.env.PORT || 8080);
+app.set('port', process.env.PORT || 80);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -51,11 +53,12 @@ app.use(function(req,res,next){
 
 app.use(function(req,res,next){
     req.db = db;
+    req.appIp = appIp;
     next();
 });
 
 function requireLogin(req, res, next) {
-  console.log(req.session);
+  console.log("Url requested is: " + req.url);
   if (req.session && req.session.signum) {
     console.log("==> Session exist")
     next(); // allow the next route to run
@@ -63,7 +66,11 @@ function requireLogin(req, res, next) {
     // require the user to log in
     console.log("==> Session null");
     req.session.reset();
-    res.redirect("/login"); // or render a form, etc.
+    if(req.url == undefined) {
+      res.redirect("/login"); // or render a form, etc.
+    } else {
+      res.redirect("/login?urlToGo=" + req.url); // or render a form, etc.
+    }
   }
 }
 
@@ -127,7 +134,7 @@ app.use(function(err, req, res, next) {
     //console.log("Express server listening on port " + app.get('port'));
 //});
 
-var server  = app.listen(app.get('port'), '0.0.0.0', function(){
+var server  = app.listen(app.get('port'), appIp, function(){
     //console.log('Listening on port ' + server .address().port); //Listening on port 8888
     var host = server.address().address
     var port = server.address().port
