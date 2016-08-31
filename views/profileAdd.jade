@@ -6,6 +6,7 @@ block content
     var minNumberOfChoses = 3;
 
     $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip(); 
       /*
       $('#checkOptions').on('click', function () {
         var checkedBoxes = $('input:checked').length;
@@ -57,8 +58,8 @@ block content
         form.form-horizontal(method="post", id="selectedWords", action='/profiles/save?target=#{target}' onsubmit="return verifyMinimumBoxes();")
           div#holder
             each skill, i in skillsList
-                input(type="checkbox", name="#{skill.skillTitle}" autocomplete="off" id="#{skill.skillTitle}" class="regular-checkbox big-checkbox")
-                label(for="#{skill.skillTitle}") #{skill.skillTitle}
+                input(type="checkbox", name="#{skill.skillTitle}" autocomplete="off" id="#{skill.skillTitle}" class="regular-checkbox big-checkbox" data-toggle="tooltip")
+                label(for="#{skill.skillTitle}" data-toggle="tooltip") #{skill.skillTitle}
           br
           br
           div(class="btn-group" role="group")
