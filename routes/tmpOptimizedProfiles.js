@@ -58,7 +58,7 @@ router.get('/show', function(req, res, next) {
     var collection = db.get('attributesPerPersonByDate');
 
 
-    //collection.find({target: 'ecapati'},{},function (err, result) {
+    //collection.find({target: 'carlos'},{},function (err, result) {
       collection.find({target: target},{},function (err, result) {
       if (err) {
         console.log(err);
