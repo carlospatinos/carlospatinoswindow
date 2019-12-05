@@ -10,7 +10,7 @@ var bodyParser = require('body-parser');
 // New Code
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('mongodb://carlospatinos:carlospatinos@ds021895.mlab.com:21895/carloswindow');
+var db = monk('mongodb://url');
 
 var routes = require('./routes/index');
 var attributes = require('./routes/attributes');
