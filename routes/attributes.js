@@ -8,6 +8,7 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/list', function(req, res, next) {
+    console.log("Showing available skills");
     var db = req.db;
     var collection = db.get('skills');
     collection.find({},{},function(e,docs){

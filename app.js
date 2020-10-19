@@ -6,11 +6,14 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var session = require('client-sessions');
 var bodyParser = require('body-parser');
+var bson = require('bson');
+
+require('dotenv').config()
 
 // New Code
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('mongodb://url');
+var db = monk(process.env.MONGO_URL);
 
 var routes = require('./routes/index');
 var attributes = require('./routes/attributes');
@@ -18,11 +21,11 @@ var profiles = require('./routes/profiles');
 
 var app = express();
 
-var appIp = "159.107.166.32";
+var appIp = "127.0.0.1";
 
 //var http = require('http');
 
-app.set('port', process.env.PORT || 80);
+app.set('port', process.env.PORT || 8080);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
