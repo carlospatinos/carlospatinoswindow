@@ -1,21 +1,24 @@
 var express = require('express');
 var router = express.Router();
+const Skill = require("../models/skill");
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/', function (req, res, next) {
+    res.send('respond with a resource');
 });
 
 
-router.get('/list', function(req, res, next) {
+router.get('/list', function (req, res, next) {
     console.log("Showing available skills");
-    var db = req.db;
-    var collection = db.get('skills');
-    collection.find({},{},function(e,docs){
-        res.render('attributesList', {
-            "skillsList" : docs,
-            title: "Skill List" 
-        });
+
+    Skill.find().collation({ locale: 'en', strength: 2 }).sort({ name: 1 }).exec((err, skills) => {
+        if (skills) {
+            console.log("Skills found");
+            console.log(skills);
+        } else {
+            req.flash('error_msg', 'Skills not available');
+        }
+        res.render('attributesList', { message: req.flash('error_msg'), skillsList: skills, title: "Skills" });
     });
 });
 /*
@@ -23,41 +26,32 @@ router.get('/linkWithPersonalView', function(req, res, next) {
     res.render('linkWithPersonalView', { title: 'Summary' });
 });*/
 
-
-
-
-
 /* GET New User page. */
-router.get('/add', function(req, res, next) {
+router.get('/add', function (req, res, next) {
     res.render('attributesAdd', { title: 'Add New Attribute' });
 });
 
 /* POST to Add User Service */
-router.post('/add', function(req, res, next) {
-
-    // Set our internal DB variable
-    var db = req.db;
+router.post('/add', function (req, res, next) {
 
     // Get our form values. These rely on the "name" attributes
     var skillTitle = req.body.skillTitle;
 
-    // Set our collection
-    var collection = db.get('skills');
-
     // Submit to the DB
-    
-    collection.insert({
-        "skillTitle" : skillTitle
-    }, function (err, doc) {
-        if (err) {
-            // If it failed, return error
-            res.send("There was a problem adding the information to the database.");
-        }
-        else {
-            // And forward to success page
-            res.redirect("/attributes/list");
-        }
+    const newSkill = new Skill({
+        skillTitle: skillTitle,
     });
+    newSkill.save()
+        .then((value) => {
+            console.log("Skill created");
+            console.log(value);
+            req.flash('success_msg', 'You have now registered a new skill!');
+            res.redirect('/attributes/list');
+        })
+        .catch(value => {
+            console.log(value);
+            res.send("There was a problem adding the information to the database.");
+        });
 });
 
 /*

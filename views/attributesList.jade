@@ -5,14 +5,13 @@ block content
   div.container
     div.content
       h3= title
-
       div.list-group
         table
           tbody
             each skill, i in skillsList
-              if (i == 0 || i%8==0) 
+              // TODO fix this table
+              if (i%8==0) 
                 tr
-              else 
-                td 
-                  button.list-group-item(type="button") #{skill.skillTitle}
+              td
+                button.list-group-item(type="button") #{skill.skillTitle}
 div.foot

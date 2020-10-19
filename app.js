@@ -6,22 +6,21 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var session = require('client-sessions');
 var bodyParser = require('body-parser');
-var bson = require('bson');
+// var bson = require('bson');
+var logger = require('morgan');
+const flash = require('connect-flash');
 
-require('dotenv').config()
 
-// New Code
-var mongo = require('mongodb');
-var monk = require('monk');
-var db = monk(process.env.MONGO_URL);
+require('dotenv').config();
 
 var routes = require('./routes/index');
 var attributes = require('./routes/attributes');
 var profiles = require('./routes/profiles');
 
 var app = express();
+var db = require('./utils/db.js');
 
-var appIp = "127.0.0.1";
+var appIp = process.env.PUBLIC_IP;
 
 //var http = require('http');
 
@@ -46,19 +45,26 @@ app.use(session({
   activeDuration: 30 * 60 * 1000,
 }));
 
+app.use(flash());
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  
+  next();
+});
 
 app.use(function(req,res,next){
     res.locals.session = req.session;
-    next();
-});
-
-
-
-app.use(function(req,res,next){
-    req.db = db;
     req.appIp = appIp;
     next();
 });
+
+// app.use(function(req,res,next){
+//     req.db = db;
+//     req.appIp = appIp;
+//     next();
+// });
 
 function requireLogin(req, res, next) {
   console.log("Url requested is: " + req.url);
@@ -109,6 +115,8 @@ app.use(function(req, res, next) {
 
 // development error handler
 // will print stacktrace
+// TODO enable this?
+
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
@@ -121,6 +129,7 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
+// TODO enable this?
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
