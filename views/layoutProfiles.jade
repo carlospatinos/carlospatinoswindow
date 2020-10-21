@@ -15,7 +15,7 @@ html
       ul.nav.nav-tabs
         li
           a(href='/') Home
-        -if(session.signum=="carlospatinos"){
+        -if(session.personalSecretId=="carlospatinos"){
         li.dropdown
           a.dropdown-toggle(href='#' data-toggle="dropdown") Attributes
             b.caret
@@ -40,7 +40,7 @@ html
               a(href='/profiles/share') Share
 
         li.dropdown.pull-right
-          a.dropdown-toggle(href='#' data-toggle="dropdown") #{session.signum}
+          a.dropdown-toggle(href='#' data-toggle="dropdown") #{session.personalSecretId}
             b.caret
           ul.dropdown-menu
             li 

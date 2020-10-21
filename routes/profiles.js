@@ -6,7 +6,7 @@ const Skill = require("../models/skill");
 
 router.get('/add', function (req, res, next) {
   var target = req.query.target;
-  var source = req.session.signum;
+  var source = req.session.personalSecretId;
 
   if (target == undefined || target == source) {
     console.log("Using default user self");
@@ -30,7 +30,7 @@ router.get('/add', function (req, res, next) {
 router.get('/share', function (req, res, next) {
   var appIp = req.appIp;
   var target = req.query.target;
-  var source = req.session.signum;
+  var source = req.session.personalSecretId;
 
   if (target == undefined || target == source) {
     console.log("Using default user self");
@@ -63,7 +63,7 @@ router.get('/show', function (req, res, next) {
 
   Skill.find().collation({ locale: 'en', strength: 2 }).sort({ name: 1 }).exec((err, skills) => {
     var target = req.query.target;
-    var source = req.session.signum;
+    var source = req.session.personalSecretId;
 
     if (target == undefined) {
       console.log("Using default user self");
@@ -72,8 +72,7 @@ router.get('/show', function (req, res, next) {
     console.log("Source: [" + source + "]  Targeting: [" + target + "]");
 
     if (skills) {
-      console.log("Skills found");
-      console.log(skills);
+      console.log("Skills found: " + skills.length);
       var attrMatrix = {};
       skills.forEach((skill) => {
         attrMatrix[skill] = [];
@@ -81,7 +80,7 @@ router.get('/show', function (req, res, next) {
 
       Profile.find({ target: target }).collation({ locale: 'en', strength: 2 }).sort({ name: 1 }).exec((err, profiles) => {
         if (profiles) {
-          console.log('Profiles found:', profiles);
+          console.log('Profiles found:' + profiles.length);
 
           var modifiedResult = [];
 
@@ -96,7 +95,7 @@ router.get('/show', function (req, res, next) {
             attrSource = profiles[name].source;
             for (var attrName in attributes) {
               //console.log(attrName + "++++++++++++++++++" + attrMatrix[attrName]);
-              if (attrMatrix[attrName].indexOf(attrSource) == -1) {
+              if (attrMatrix[attrName] != undefined && attrMatrix[attrName].indexOf(attrSource) == -1) {
                 attrMatrix[attrName].push(attrSource);
               }
             }
@@ -158,48 +157,58 @@ router.get('/show', function (req, res, next) {
 });
 
 router.post('/save', function (req, res, next) {
-
-  // Set our internal DB variable
-  var db = req.db;
-
   var target = req.query.target;
-  var source = req.session.signum;
+  var source = req.session.personalSecretId;
   if (target == undefined || target == "yourself") {
     console.log("Using default user" + source);
     target = source;
   }
 
   //var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
-  var ipAddress = req.ip;
 
-  console.log("Source: [" + source + "]  Targeting: [" + target + "]" + " ip ===> " + ipAddress);
 
-  // Set our collection
-  var collection = db.get('attributesPerPersonByDate');
+  console.log("Source: [" + source + "]  Targeting: [" + target + "]" + " ip ===> ");
 
-  // Submit to the DB
-  collection.insert({
+  // console.log(req.body);
+  let personalCharacteristics = [];
+  let p = req.body;
+  for (var key in p) {
+    console.log(key + " -> " + p[key]);
+    personalCharacteristics.push(key);
+  }
+
+
+
+
+  const moreAttributesToProfile = new Profile({
     "source": source,
     "target": target,
-    "attributes": req.body,
-    "ipAddress": ipAddress
-  }, function (err, doc) {
-    if (err) {
-      // If it failed, return error
-      res.send("There was a problem adding the information to the database.");
-    }
-    else {
-      if (source == target) {
-        res.redirect('/profiles/show');
-      } else {
-        res.render('profileNoData', {
-          "stepTitle": "Thanks so much for your feedback",
-          "stepDetails": "The information has been submitted and processed.",
-          "target": target
-        });
-      }
-    }
+    "attributes": personalCharacteristics,
+    "ipAddress": "27.0.0.1"
   });
+
+  
+
+  moreAttributesToProfile.save()
+    .then((value) => {
+      console.log("Profile attributes created");
+      console.log(value);
+      req.flash('success_msg', 'You have now registered a team!');
+      //res.redirect('/profiles/show');
+      res.redirect('/');
+
+      // res.render('profileNoData', {
+      //   "stepTitle": "Thanks so much for your feedback",
+      //   "stepDetails": "The information has been submitted and processed.",
+      //   "target": target
+      // });
+    })
+    .catch(value => {
+      console.log(value);
+      res.send("There was a problem adding the information to the database.");
+    });
+
+
 
 });
 

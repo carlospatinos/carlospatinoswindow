@@ -8,7 +8,7 @@ router.get('/add', function(req, res, next) {
     var db = req.db;
 
     var target = req.query.target;
-    var source = req.session.signum;
+    var source = req.session.personalSecretId;
 
     if (target == undefined || target == source) {
         console.log("Using default user self");
@@ -46,7 +46,7 @@ router.get('/show', function(req, res, next) {
     });
 
     var target = req.query.target;
-    var source = req.session.signum;
+    var source = req.session.personalSecretId;
     if (target == undefined) {
         console.log("Using default user self");
         target = source;
@@ -139,7 +139,7 @@ router.post('/save', function(req, res, next) {
     var db = req.db;
 
     var target = req.query.target;
-    var source = req.session.signum;
+    var source = req.session.personalSecretId;
     if (target == undefined || target == "yourself") {
         console.log("Using default user" + source);
         target = source;

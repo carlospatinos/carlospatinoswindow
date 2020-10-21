@@ -33,6 +33,7 @@ app.set('view engine', 'jade');
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -68,7 +69,7 @@ app.use(function(req,res,next){
 
 function requireLogin(req, res, next) {
   console.log("Url requested is: " + req.url);
-  if (req.session && req.session.signum) {
+  if (req.session && req.session.personalSecretId) {
     console.log("==> Session exist")
     next(); // allow the next route to run
   } else {

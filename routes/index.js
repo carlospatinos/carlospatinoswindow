@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/logout', function(req, res, next) {
     sess = req.session;
-    sess.signum = undefined;
+    sess.personalSecretId = undefined;
     req.session.reset();
     req.session.destroy();
 
@@ -31,8 +31,8 @@ router.get('/login', function(req, res, next) {
 
 router.post('/login', function(req, res, next) {
     sess = req.session;
-    var signum = req.body.signum;
-    sess.signum = signum;
+    var personalSecretId = req.body.personalSecretId;
+    sess.personalSecretId = personalSecretId;
     //Session set when user Request our app via URL
     var urlToGo = req.query.urlToGo;
     if(urlToGo != undefined && urlToGo != "undefined") {
